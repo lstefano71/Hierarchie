@@ -5,7 +5,12 @@ var gulp = require('gulp'),
 gulp.task('webserver', function() {
   gulp.src('./')
     .pipe(webserver({
-      livereload: true,
+      livereload: {
+        enable: true,
+        filter: function(filePath, cb) {
+          cb( !(/node_modules/.test(filePath)) && !(/.git/.test(filePath)));
+        }
+      },
       directoryListing: true,
       open: true
     }));
